@@ -1,20 +1,40 @@
 package io.jharkhand.ppmtool.Domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 import java.util.Date;
-
-public class Project {
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+@Entity
+public class Project{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "Project name should not be blank")
     private String projectName;
+
+    @NotBlank(message = "Project identifier is required")
+    @Size(min=4,max = 5 ,message = "Please Use 4 to 5 Character")
+    @Column(updatable = false, unique = true)
     private String projectIdentifier;
+
+    @NotBlank(message ="Description should not be blank.")
     private String description;
+
+    @JsonFormat(pattern="yyyy-mm-dd")
     private Date start_date;
+
+    @JsonFormat(pattern="yyyy-mm-dd")
     private Date end_date;
 
+    @JsonFormat(pattern="yyyy-mm-dd")
     private Date created_At;
+
+    @JsonFormat(pattern="yyyy-mm-dd")
     private Date updated_At;
 
     public Project(){
